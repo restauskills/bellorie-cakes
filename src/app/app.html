@@ -1,0 +1,926 @@
+
+<!-- ANNOUNCEMENT -->
+
+<div class="announcement">
+  ✦ FRESHLY BAKED CAKES • MADE WITH LOVE • BELLORIE CAKES ✦
+</div>
+
+<!-- HEADER -->
+
+<header class="site-header">
+
+  <a href="#" class="brand">
+    <span class="brand-mark">B.</span>
+
+    <span>
+      <strong>BELLORIE</strong>
+      <small>CAKES & PATISSERIE</small>
+    </span>
+  </a>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#shop">Shop Menu</a>
+    <a href="#story">Our Story</a>
+    <a href="#contact">Find Us</a>
+  </nav>
+
+  <div class="header-actions">
+
+    <button class="theme-btn" (click)="toggleTheme()">
+      {{ darkMode ? '☀ Light' : '☾ Dark' }}
+    </button>
+
+    <button class="cart-pill" (click)="scrollToShop()">
+      BAG <span>{{ cartCount }}</span>
+    </button>
+
+  </div>
+
+</header>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+  <div class="hero-copy">
+
+    <p class="hero-kicker">
+      A LITTLE SLICE OF HAPPINESS
+    </p>
+
+    <h1>
+      Sweet moments,
+      <em>beautiful cakes.</em>
+    </h1>
+
+    <p class="hero-text">
+      Celebrate life's sweetest moments with beautifully
+      crafted cakes made with love, care and the finest
+      ingredients. Every slice tells a delicious story.
+    </p>
+
+    <button class="primary-btn" (click)="scrollToShop()">
+      EXPLORE OUR CAKES →
+    </button>
+
+    <p class="hero-signature">
+      Baked with love. Made for memories.
+    </p>
+
+  </div>
+
+  <div class="hero-art">
+
+    <img
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRt8_rTLBd4nYH0W223XXwHdwRBcjFfXIfnzERLifrNaXdeE1fzUNaNQNk&s=10"
+      alt="Bellorie signature celebration cake">
+
+    <div class="hero-label">
+      <strong>THE BELLORIE SIGNATURE</strong>
+      <span>MADE FOR YOUR SPECIAL DAYS</span>
+    </div>
+
+    <div class="hero-circle">
+      SWEET<br>MEMORIES
+    </div>
+
+  </div>
+
+</section>
+
+<!-- STORY -->
+
+<section class="color-banner" id="story">
+
+  <div>
+    <span>OUR LITTLE STORY</span>
+    <h2>Made with love, shared with joy.</h2>
+  </div>
+
+  <p>
+    At Bellorie Cakes, we believe every celebration
+    deserves something sweet. We create delightful
+    cakes for your most memorable moments.
+  </p>
+
+</section>
+
+<!-- SHOP MENU -->
+
+<section class="menu-section" id="shop">
+
+  <div class="section-heading">
+
+    <div>
+      <p class="eyebrow">THE BELLORIE CAKE COLLECTION</p>
+
+      <h2>
+        Find your <em>favorite.</em>
+      </h2>
+
+      <p class="collection-description">
+        Discover our freshly inspired whole cakes.
+        Choose your favorite and add it to your bag.
+      </p>
+    </div>
+
+    <div class="collection-number">
+      <strong>12</strong>
+      <span>CAKES<br>TO LOVE</span>
+    </div>
+
+  </div>
+
+  <!-- SEARCH AND FILTER -->
+
+  <div class="toolbar">
+
+    <div class="category-tabs">
+
+      @for (category of categories; track category) {
+
+        <button
+          [class.active]="selectedCategory === category"
+          (click)="selectedCategory = category">
+
+          {{ category }}
+
+        </button>
+
+      }
+
+    </div>
+
+    <input
+      class="search"
+      type="text"
+      placeholder="Search cakes..."
+      [(ngModel)]="searchText">
+
+  </div>
+
+  <!-- CAKE PRODUCTS -->
+
+  <div class="product-grid">
+
+    @for (cake of filteredProducts; track cake.id) {
+
+      <article class="product-card">
+
+        <button
+          class="product-photo"
+          (click)="openCake(cake)">
+
+          <img [src]="cake.image" [alt]="cake.name">
+
+          <span class="product-number">
+            0{{ cake.id }}
+          </span>
+
+          <span class="zoom-hint">
+            VIEW CAKE +
+          </span>
+
+        </button>
+
+        <div class="product-info">
+
+          <div>
+            <small>{{ cake.category }}</small>
+            <h3>{{ cake.name }}</h3>
+          </div>
+
+          <strong>₱{{ cake.price | number:'1.2-2' }}</strong>
+
+        </div>
+
+        <div class="product-bottom">
+
+          <span>WHOLE CAKE • {{ cake.size }}</span>
+
+          <button
+            aria-label="Add cake to bag"
+            (click)="addToCart(cake)">
+
+            +
+
+          </button>
+
+        </div>
+
+      </article>
+
+    } @empty {
+
+      <p class="no-products">
+        No cakes found. Try another search.
+      </p>
+
+    }
+
+  </div>
+
+</section>
+
+<!-- PROMOTION -->
+
+<section class="promo-banner">
+
+  <div>
+    <p>A SWEETER WAY TO CELEBRATE</p>
+    <h2>Make every occasion a little more special.</h2>
+  </div>
+
+  <a href="#shop">ORDER YOUR CAKE →</a>
+
+</section>
+
+<!-- CART -->
+
+<section class="cart-section" id="bag">
+
+  <div class="cart-panel">
+
+    <div class="panel-heading">
+
+      <div>
+        <p class="eyebrow">YOUR SELECTED TREATS</p>
+        <h2>Your Bag.</h2>
+      </div>
+
+      <span class="count-bubble">
+        {{ cartCount }} ITEMS
+      </span>
+
+    </div>
+
+    @if (cart.length === 0) {
+
+      <div class="empty-cart">
+
+        <h2>♡</h2>
+
+        <p>Your bag is waiting for something sweet.</p>
+
+        <a href="#shop">EXPLORE OUR CAKES →</a>
+
+      </div>
+
+    } @else {
+
+      @for (item of cart; track item.cake.id) {
+
+        <div class="cart-line">
+
+          <img [src]="item.cake.image" [alt]="item.cake.name">
+
+          <div class="cart-description">
+
+            <strong>{{ item.cake.name }}</strong>
+
+            <small>
+              ₱{{ item.cake.price | number:'1.2-2' }} each
+            </small>
+
+            <button
+              class="remove-link"
+              (click)="removeItem(item)">
+
+              Remove
+
+            </button>
+
+          </div>
+
+          <div class="quantity">
+
+            <button (click)="decreaseQuantity(item)">−</button>
+
+            {{ item.quantity }}
+
+            <button (click)="increaseQuantity(item)">+</button>
+
+          </div>
+
+          <strong>
+            ₱{{ item.cake.price * item.quantity | number:'1.2-2' }}
+          </strong>
+
+        </div>
+
+      }
+
+      <div class="totals">
+
+        <div>
+          <span>Subtotal</span>
+          <strong>₱{{ subtotal | number:'1.2-2' }}</strong>
+        </div>
+
+        <div>
+          <span>Delivery Fee</span>
+          <strong>₱{{ deliveryFee | number:'1.2-2' }}</strong>
+        </div>
+
+        <div class="grand-total">
+          <span>Total</span>
+          <strong>₱{{ total | number:'1.2-2' }}</strong>
+        </div>
+
+      </div>
+
+      <button class="primary-btn checkout-btn" (click)="openCheckout()">
+        PROCEED TO CHECKOUT →
+      </button>
+
+    }
+
+  </div>
+
+</section>
+
+<!-- PRODUCT DETAILS POPUP -->
+
+@if (selectedCake) {
+
+  <div class="modal-backdrop" (click)="closeCake()">
+
+    <div class="cake-modal" (click)="$event.stopPropagation()">
+
+      <button class="modal-close" (click)="closeCake()">×</button>
+
+      <img
+        class="modal-image"
+        [src]="selectedCake.image"
+        [alt]="selectedCake.name">
+
+      <div class="modal-content">
+
+        <p class="eyebrow">{{ selectedCake.category }}</p>
+
+        <h2>{{ selectedCake.name }}</h2>
+
+        <h3 class="modal-price">
+          ₱{{ selectedCake.price | number:'1.2-2' }}
+        </h3>
+
+        <p>{{ selectedCake.description }}</p>
+
+        <p><strong>Size:</strong> {{ selectedCake.size }}</p>
+
+        <button
+          class="primary-btn"
+          (click)="buyNow(selectedCake)">
+
+          BUY NOW →
+
+        </button>
+
+        <button
+          class="secondary-btn"
+          (click)="addToCart(selectedCake)">
+
+          ADD TO BAG +
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
+
+
+<!-- =====================================
+     CHECKOUT POPUP
+===================================== -->
+
+@if (showCheckout) {
+
+  <div class="modal-backdrop" (click)="closeCheckout()">
+
+    <div
+      class="checkout-modal"
+      (click)="$event.stopPropagation()">
+
+      <button
+        type="button"
+        class="modal-close"
+        (click)="closeCheckout()">
+        ×
+      </button>
+
+      <div class="checkout-modal-heading">
+
+        <p class="eyebrow">JUST ONE MORE STEP</p>
+
+        <h2>Complete Your Order.</h2>
+
+        <p>
+          Please provide your details below to complete
+          your Bellorie Cakes order.
+        </p>
+
+      </div>
+
+      <form
+        class="checkout-form"
+        #checkoutForm="ngForm"
+        (ngSubmit)="placeOrder()"
+        novalidate>
+
+        <label>
+          Full Name *
+
+          <input
+            type="text"
+            name="fullName"
+            [(ngModel)]="customer.fullName"
+            placeholder="Your full name"
+            required>
+        </label>
+
+        <label>
+          Phone Number *
+
+          <input
+            type="tel"
+            name="phone"
+            [(ngModel)]="customer.phone"
+            placeholder="09XX XXX XXXX"
+            required>
+        </label>
+
+        <label class="full">
+          Email Address
+
+          <input
+            type="email"
+            name="email"
+            [(ngModel)]="customer.email"
+            placeholder="you@example.com">
+        </label>
+
+        <label class="full">
+          Delivery Address *
+
+          <textarea
+            name="address"
+            [(ngModel)]="customer.address"
+            rows="3"
+            placeholder="Your complete delivery address"
+            required>
+          </textarea>
+        </label>
+
+        <label class="full">
+          Payment Method *
+
+          <select
+            name="paymentMethod"
+            [(ngModel)]="paymentMethod">
+
+            <option value="GCash">GCash</option>
+            <option value="Maya">Maya</option>
+            <option value="Cash on Delivery">
+              Cash on Delivery
+            </option>
+
+          </select>
+        </label>
+
+        @if (paymentMethod === 'GCash' || paymentMethod === 'Maya') {
+
+          <div
+            class="full payment-card"
+            [class.gcash-card]="paymentMethod === 'GCash'"
+            [class.maya-card]="paymentMethod === 'Maya'">
+
+            <div
+              class="payment-logo"
+              [class.gcash-logo]="paymentMethod === 'GCash'"
+              [class.maya-logo]="paymentMethod === 'Maya'">
+
+              {{ paymentMethod === 'GCash' ? 'G' : 'M' }}
+
+            </div>
+
+            <div>
+              <strong>{{ paymentMethod }} Payment</strong>
+
+              <p>
+                This is a payment simulation.
+                No actual money will be transferred.
+              </p>
+            </div>
+
+          </div>
+
+          <label class="full">
+            Payment Reference Number (Optional)
+
+            <input
+              type="text"
+              name="referenceNumber"
+              [(ngModel)]="customer.referenceNumber"
+              placeholder="Enter reference number if available">
+          </label>
+
+        } @else {
+
+          <div class="full payment-card cash-card">
+
+            <div class="payment-logo cash-logo">₱</div>
+
+            <div>
+              <strong>Cash on Delivery</strong>
+              <p>Pay when your cake order arrives.</p>
+            </div>
+
+          </div>
+
+        }
+
+        <label class="full">
+          Special Instructions
+
+          <textarea
+            name="instructions"
+            [(ngModel)]="customer.instructions"
+            rows="2"
+            placeholder="Optional instructions">
+          </textarea>
+        </label>
+
+        <!-- ORDER SUMMARY -->
+
+        <div class="full checkout-summary">
+
+          <div>
+            <span>Subtotal</span>
+            <strong>
+              ₱{{ subtotal | number:'1.2-2' }}
+            </strong>
+          </div>
+
+          <div>
+            <span>Delivery Fee</span>
+            <strong>
+              ₱{{ deliveryFee | number:'1.2-2' }}
+            </strong>
+          </div>
+
+          <div class="checkout-grand-total">
+            <strong>Total Amount</strong>
+            <strong>
+              ₱{{ total | number:'1.2-2' }}
+            </strong>
+          </div>
+
+        </div>
+
+        <p class="full payment-note">
+          Please review your information before placing your order.
+          This website is a checkout simulation and does not process
+          real GCash or Maya payments.
+        </p>
+
+        <!-- FIXED PLACE ORDER BUTTON -->
+
+        <button
+          class="primary-btn checkout-confirm full"
+          type="submit">
+
+          PLACE ORDER • ₱{{ total | number:'1.2-2' }}
+
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+}
+
+
+<!-- =====================================
+     RECEIPT POPUP
+===================================== -->
+
+@if (showReceipt && order) {
+
+  <div class="modal-backdrop">
+
+    <div class="receipt-modal">
+
+      <button
+        type="button"
+        class="modal-close no-print"
+        (click)="closeReceipt()">
+        ×
+      </button>
+
+      <!-- PRINTABLE RECEIPT -->
+
+      <div class="receipt" id="print-area">
+
+        <div class="receipt-top">
+
+          <div class="receipt-brand-mark">B.</div>
+
+          <p class="receipt-kicker">
+            THANK YOU FOR CHOOSING
+          </p>
+
+          <h2>BELLORIE CAKES</h2>
+
+          <p class="receipt-subtitle">
+            CAKES & PATISSERIE
+          </p>
+
+          <span class="confirmed-label">
+            ✓ ORDER PLACED
+          </span>
+
+        </div>
+
+        <!-- ORDER INFORMATION -->
+
+        <div class="receipt-meta">
+
+          <div>
+            <small>ORDER NUMBER</small>
+            <strong>{{ order.orderNumber }}</strong>
+          </div>
+
+          <div>
+            <small>ORDER DATE</small>
+            <strong>{{ order.date }}</strong>
+          </div>
+
+        </div>
+
+        <!-- CUSTOMER DETAILS -->
+
+        <div class="receipt-customer">
+
+          <h3>CUSTOMER INFORMATION</h3>
+
+          <p>
+            <strong>Name:</strong>
+            {{ order.customer.fullName }}
+          </p>
+
+          <p>
+            <strong>Phone:</strong>
+            {{ order.customer.phone }}
+          </p>
+
+          <p>
+            <strong>Email:</strong>
+            {{ order.customer.email || 'Not provided' }}
+          </p>
+
+          <p>
+            <strong>Address:</strong>
+            {{ order.customer.address }}
+          </p>
+
+          <p>
+            <strong>Payment Method:</strong>
+            {{ order.paymentMethod }}
+          </p>
+
+          @if (order.customer.referenceNumber) {
+
+            <p>
+              <strong>Reference:</strong>
+              {{ order.customer.referenceNumber }}
+            </p>
+
+          }
+
+          @if (order.customer.instructions) {
+
+            <p>
+              <strong>Instructions:</strong>
+              {{ order.customer.instructions }}
+            </p>
+
+          }
+
+        </div>
+
+        <!-- ORDER DETAILS -->
+
+        <div class="receipt-items">
+
+          <h3>ORDER DETAILS</h3>
+
+          <div class="receipt-row receipt-head">
+            <span>ITEM</span>
+            <span>QTY</span>
+            <span>AMOUNT</span>
+          </div>
+
+          @for (item of order.items; track item.cake.id) {
+
+            <div class="receipt-row">
+
+              <span>{{ item.cake.name }}</span>
+
+              <span>{{ item.quantity }}</span>
+
+              <span>
+                ₱{{ item.cake.price * item.quantity | number:'1.2-2' }}
+              </span>
+
+            </div>
+
+          }
+
+        </div>
+
+        <!-- TOTAL AMOUNT -->
+
+        <div class="receipt-totals">
+
+          <p>
+            <span>Subtotal</span>
+            <strong>
+              ₱{{ order.subtotal | number:'1.2-2' }}
+            </strong>
+          </p>
+
+          <p>
+            <span>Delivery Fee</span>
+            <strong>
+              ₱{{ order.deliveryFee | number:'1.2-2' }}
+            </strong>
+          </p>
+
+          <p class="receipt-grand">
+            <span>TOTAL AMOUNT</span>
+            <strong>
+              ₱{{ order.total | number:'1.2-2' }}
+            </strong>
+          </p>
+
+        </div>
+
+        <!-- RECEIPT FOOTER -->
+
+        <div class="receipt-footer">
+
+          <h3>Thank You!</h3>
+
+          <p>
+            Your sweetest moments begin with Bellorie.
+          </p>
+
+          <span>
+            MADE WITH LOVE • BELLORIE CAKES
+          </span>
+
+        </div>
+
+      </div>
+
+      <!-- RECEIPT ACTIONS -->
+
+      <div class="receipt-actions no-print">
+
+        <button
+          type="button"
+          class="primary-btn"
+          (click)="printReceipt()">
+
+          PRINT RECEIPT →
+
+        </button>
+
+        <button
+          type="button"
+          class="secondary-btn"
+          (click)="closeReceipt()">
+
+          CLOSE
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}
+
+
+<!-- FIND US / CONTACT -->
+
+<section class="contact-section" id="contact">
+
+  <div class="contact-heading">
+
+    <p class="eyebrow">WE WOULD LOVE TO HEAR FROM YOU</p>
+
+    <h2>Find <em>Bellorie.</em></h2>
+
+    <p>
+      Visit our shop or get in touch with us for your
+      next sweet celebration.
+    </p>
+
+  </div>
+
+  <div class="contact-grid">
+
+    <div class="contact-details">
+
+      <div class="contact-item">
+        <span class="contact-icon">⌖</span>
+        <div>
+          <small>OUR LOCATION</small>
+          <strong>{{ shopAddress }}</strong>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <span class="contact-icon">✉</span>
+        <div>
+          <small>EMAIL ADDRESS</small>
+          <a [href]="'mailto:' + shopEmail">{{ shopEmail }}</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <span class="contact-icon">☎</span>
+        <div>
+          <small>CONTACT NUMBER</small>
+          <a [href]="'tel:' + shopPhone">{{ shopPhone }}</a>
+        </div>
+      </div>
+
+      <a
+        class="primary-btn directions-btn"
+        [href]="'https://www.google.com/maps/search/?api=1&query=' + shopAddress"
+        target="_blank"
+        rel="noopener">
+
+        GET DIRECTIONS →
+
+      </a>
+
+    </div>
+
+    <div class="map-container">
+
+      <iframe
+  [src]="mapUrl"
+  title="Bellorie Cakes Shop Location"
+  width="100%"
+  height="350"
+  style="border:0"
+  loading="lazy">
+</iframe>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="footer-brand">
+
+    <span class="brand-mark">B.</span>
+
+    <span>
+      <strong>BELLORIE CAKES</strong>
+      <small>CAKES & PATISSERIE</small>
+    </span>
+
+  </div>
+
+  <p>Sweet moments, beautifully made.</p>
+
+  <small>© 2026 BELLORIE CAKES. ALL RIGHTS RESERVED.</small>
+
+</footer>
+
+<!-- TOAST -->
+
+@if (showToast) {
+
+  <div class="toast">
+    {{ toastMessage }}
+  </div>
+
+}

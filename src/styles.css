@@ -1,0 +1,61 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap');
+
+:root {
+  --lilac: #BFB8F4;
+  --cream: #FEF8E8;
+  --lime: #D0FF5F;
+  --burgundy: #772868;
+  --aubergine: #302F46;
+
+  --paper: #FFFFFF;
+  --card: #FFFFFF;
+  --ink: #302F46;
+  --muted: #777184;
+  --line: rgba(48,47,70,.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  transition: background .3s, color .3s;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+/* LIGHT MODE */
+
+body:not(.dark-theme) {
+  --paper: #FFFFFF;
+  --card: #FFFFFF;
+  --ink: #302F46;
+  --muted: #777184;
+  --line: rgba(48,47,70,.15);
+}
+
+/* DARK MODE */
+
+body.dark-theme {
+  --paper: #302F46;
+  --card: #3D3B55;
+  --ink: #FEF8E8;
+  --muted: #D2CBE1;
+  --line: rgba(254,248,232,.18);
+  --lilac: #494365;
+  --cream: #302F46;
+}
