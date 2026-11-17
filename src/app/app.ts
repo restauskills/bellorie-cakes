@@ -225,7 +225,7 @@ export class App implements OnInit {
   shopName = 'BELLORIE CAKES';
   shopEmail = 'bellorie@gmail.com';
   shopPhone = '09094567397';
-  shopAddress = 'Gabaldon Nueva Ecija';
+  shopAddress = 'South Poblacion, Gabaldon Nueva Ecija';
 
   // ==================================
   // INITIALIZE WEBSITE
